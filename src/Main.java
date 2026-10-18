@@ -6,6 +6,8 @@ import connectivity.SCC;
 import connectivity.SCCResult;
 import connectivity.TopoResult;
 import connectivity.TopoSort;
+import shortestpath.DijkstraResult;
+import shortestpath.Dijkstra;
 
 public class Main {
     public static void main(String[] args) {
@@ -46,6 +48,18 @@ public class Main {
         sg.addEdge(4, 5, 1);
         sg.addEdge(5, 3, 1);
         System.out.println("scc: " + SCC.run(sg).components);
+
+        Graph dg = new Graph(5, true);
+        dg.addEdge(0, 1, 4);
+        dg.addEdge(0, 2, 1);
+        dg.addEdge(2, 1, 2);
+        dg.addEdge(1, 3, 1);
+        dg.addEdge(2, 3, 5);
+        DijkstraResult d = Dijkstra.run(dg, 0);
+        for (int i = 0; i < 5; i++) {
+            if (d.dist[i] == DijkstraResult.INF) System.out.println(i + ": unreachable");
+            else System.out.println(i + ": " + d.dist[i] + " path " + d.pathTo(i));
+        }
     }
 
 }
